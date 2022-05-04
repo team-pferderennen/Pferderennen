@@ -12,7 +12,8 @@ public class GameEvents : MonoBehaviour
         current = this;
     }
 
-    public void HoleEnter() {
+    public void HoleEnter(int points) {
+
         if (onHoleEnter != null)
             onHoleEnter();
     }
