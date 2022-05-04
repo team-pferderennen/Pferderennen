@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    private static int MAX_NUM_OF_POINTS = 20;
+    public static int MAX_NUM_OF_POINTS = 20;
     public bool newHoleEnter;
     public int actualPoints;
     private int gainedPoints;

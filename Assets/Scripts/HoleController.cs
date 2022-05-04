@@ -15,8 +15,8 @@ public class HoleController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag(BALL_TAG)) {
-            gameController.getComponent<GameController>().newHoleEnter = true;
-            gameController.getComponent<GameController>().actualPoints = 
+            gameController.GetComponent<GameController>().newHoleEnter = true;
+            gameController.GetComponent<GameController>().actualPoints = 
                 GetCorrespondingPoints(this.name);
             GameEvents.current.HoleEnter();
         }
@@ -27,7 +27,7 @@ public class HoleController : MonoBehaviour
             return Holes.GreenHole;
         else if (holeName.Contains("yellowHole"))
             return Holes.YellowHole;
-        else if (holeName.Contains("redHole"))
+        else
             return Holes.RedHole;
     }
 }

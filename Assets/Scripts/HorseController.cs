@@ -24,7 +24,7 @@ public class HorseController : MonoBehaviour
             startPosition.z
         );
         stretchPerPoint = horseStandLength/
-            gameController.getComponent<GameController>().MAX_NUM_OF_POINTS;
+            GameController.MAX_NUM_OF_POINTS;
         elapsedTime = 0;
         moving = false;
         GameEvents.current.onHoleEnter += OnNewPosition;
@@ -50,7 +50,7 @@ public class HorseController : MonoBehaviour
     public void OnNewPosition() {
         if (moving)
             return;
-        int actualPoints = gameController.getComponent<GameController>().actualPoints;
+        int actualPoints = gameController.GetComponent<GameController>().actualPoints;
         oldPosition = newPosition;
         float moveDelta = actualPoints*stretchPerPoint;
         Vector3 actualPosition = transform.position;
