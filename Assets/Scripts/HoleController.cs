@@ -35,21 +35,4 @@ public class HoleController : MonoBehaviour
             return; 
         }
     }
-
-    /**
-    public void HoleEnter(int points) {
-        
-
-        gameController.setScore(points);
-        
-    }*/
-
-    // private int GetCorrespondingPoints(string holeName) {
-    //     if (holeName.Contains("greenHole"))
-    //         return Holes.GreenHole;
-    //     else if (holeName.Contains("yellowHole"))
-    //         return Holes.YellowHole;
-    //     else
-    //         return Holes.RedHole;
-    // }
 }
