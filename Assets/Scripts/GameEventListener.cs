@@ -1,10 +1,9 @@
-namespace DefaultNamespace;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-abstract class GameEventListener: MonoBehaviour
+public abstract class GameEventListener: MonoBehaviour
 {
-    public abstract OnEnable();
-    public abstract OnEventRaised();
+    public abstract void OnEnable();
+    public abstract void OnEventRaised(int points);
 }

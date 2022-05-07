@@ -12,9 +12,11 @@ public class HoleController : MonoBehaviour
 {
     // private static string BALL_TAG = "BallEntered"; 
     private GameController gameController;
+    private EventManager EventManager;
 
     private void Start() {
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        EventManager = new EventManager();
     }
 
     private int red_points = 3; 

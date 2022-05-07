@@ -16,9 +16,9 @@ public class GameController : GameEventListener
     private int gainedPoints;
     public EventManager Event;
 
-    private void OnEnable()
+    public override void OnEnable()
     {
-        Event.RegisterListener(this)
+        Event.RegisterListener(this);
     }
 
     private void Start() {
@@ -33,7 +33,7 @@ public class GameController : GameEventListener
             Debug.Log("Next Player!");
     }
 
-    public void OnEventRaised(int points) {
+    public override void OnEventRaised(int points) {
         gainedPoints += points;
         //horseController.OnNewPosition(points);
     }

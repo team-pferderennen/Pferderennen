@@ -15,7 +15,7 @@ public class HorseController : GameEventListener
 
     public EventManager Event;
 
-    private void OnEnable()
+    public override void OnEnable()
     {
         Event.RegisterListener(this);
     }
@@ -64,7 +64,7 @@ public class HorseController : GameEventListener
             moving = false;
     }
 
-    public void OnEventRaised(int points) {
+    public override void OnEventRaised(int points) {
         if (moving)
             return;
         //int actualPoints = gameController.GetComponent<GameController>().actualPoints;
