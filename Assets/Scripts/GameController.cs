@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+public class GameController : GameEventListener
 {
     private HorseController horseController;
 
@@ -14,19 +14,28 @@ public class GameController : MonoBehaviour
     public bool newHoleEnter;
     public int actualPoints;
     private int gainedPoints;
+    public EventManager Event;
+
+    private void OnEnable()
+    {
+        Event.RegisterListener(this)
+    }
 
     private void Start() {
         newHoleEnter = false;
         gainedPoints = 0;
+        OnEnable();
     }
 
-    private void Update() {
+    private void Update()
+    {
         if (gainedPoints >= MAX_NUM_OF_POINTS)
             Debug.Log("Next Player!");
     }
 
-    public void setScore(int points) {
+    public void OnEventRaised(int points) {
         gainedPoints += points;
-        horseController.OnNewPosition(points);
+        //horseController.OnNewPosition(points);
     }
+    
 }

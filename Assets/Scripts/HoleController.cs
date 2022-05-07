@@ -24,24 +24,25 @@ public class HoleController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(this.CompareTag("red_hole")) {
-            HoleEnter(red_points);
+            //Aufruf des EventManagers
+            EventManager.Raise(red_points);
         } else if (this.CompareTag("yellow_hole")) {
-            HoleEnter(yellow_points);
-        } else if (this.CompareTag("green_hole")) {
-            HoleEnter(green_points);
+            EventManager.Raise(yellow_points);
+        } else if (this.CompareTag("green_hole"))
+        {
+            EventManager.Raise(green_points);
         } else {
             return; 
         }
     }
 
+    /**
     public void HoleEnter(int points) {
         
 
         gameController.setScore(points);
-
-        // if (onHoleEnter != null)
-        //     onHoleEnter();
-    }
+        
+    }*/
 
     // private int GetCorrespondingPoints(string holeName) {
     //     if (holeName.Contains("greenHole"))
