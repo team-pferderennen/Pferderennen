@@ -7,14 +7,6 @@ public class ScoreController : GameEventListener
     public static int MAX_NUM_OF_POINTS = 10;
     private int actualPoints;
     private int gainedPoints;
-
-    public override void OnEventEnable(EventManager eventManager) {
-        eventManager.RegisterListener(this.GetComponent<GameEventListener>());
-    }
-
-    public override void OnEventDisable(EventManager eventManager) {
-        eventManager.UnregisterListener(this.GetComponent<GameEventListener>());
-    }
     
     private void Start() {
         gainedPoints = 0;

@@ -15,7 +15,7 @@ public class HoleController : MonoBehaviour
     private int yellow_points = 2; 
     private int green_points = 1;
 
-    public GameController gameController;
+    private GameController gameController;
 
     private void Start() {
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
@@ -23,6 +23,7 @@ public class HoleController : MonoBehaviour
   
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("OnTrigger");
         if(this.CompareTag("red_hole")) {
             //Aufruf des EventManagers
             gameController.eventManager.Raise(red_points);

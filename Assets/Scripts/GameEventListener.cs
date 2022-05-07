@@ -4,7 +4,13 @@ using UnityEngine;
 
 public abstract class GameEventListener: MonoBehaviour
 {
-    public abstract void OnEventEnable(EventManager eventManager);
-    public abstract void OnEventDisable(EventManager eventManager);
+    public void OnEventEnable(EventManager eventManager) {
+        eventManager.RegisterListener(this);
+    }
+
+    public void OnEventDisable(EventManager eventManager) {
+        eventManager.UnregisterListener(this);
+    }
+    
     public abstract void OnEventRaised(int points);
 }

@@ -8,15 +8,19 @@ public class EventManager : ScriptableObject {
     
     public void Raise(int points)
     {
-        for (int i = listeners.Count - 1; i >= 0; i--)
-            listeners[i].OnEventRaised(points); 
+        for (int i = 0; i < listeners.Count; i++) {
+            Debug.Log(listeners[i]);
+            listeners[i].OnEventRaised(points);
+        } 
     }
 
     public void RegisterListener(GameEventListener listener) {
+        Debug.Log(listener.GetType());
         listeners.Add(listener);
     }
 
     public void UnregisterListener(GameEventListener listener) {
+        Debug.Log(listener.GetType());
         listeners.Remove(listener);
     }
     
