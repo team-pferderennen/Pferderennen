@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour {
 
     private void Start() {
         horseController = GameObject.FindGameObjectWithTag("HorseController").GetComponent<HorseController>();
-        scoreController = GameObject.FindGameObjectWithTag("ScoreController").GetComponent<ScoreController>();
+        scoreController = GameObject.FindGameObjectWithTag("ScoreLabel").GetComponent<ScoreController>();
         horseController.OnEventEnable(eventManager);
         scoreController.OnEventEnable(eventManager);
     }

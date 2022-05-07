@@ -12,7 +12,6 @@ public class HorseController : GameEventListener
     private Vector3 startPosition, endPosition, 
                     oldPosition, newPosition;
     public GameObject horseStand;
-    private GameController gameController;
 
     public override void OnEventEnable(EventManager eventManager) {
         eventManager.RegisterListener(this.GetComponent<GameEventListener>());
@@ -38,7 +37,7 @@ public class HorseController : GameEventListener
         );
         //Debug.Log("endPosition: " + endPosition);
         stretchPerPoint = horseStandLength/
-            GameController.MAX_NUM_OF_POINTS;
+            ScoreController.MAX_NUM_OF_POINTS;
         //Debug.Log("stretchPerPoint: " + stretchPerPoint);
         elapsedTime = 0;
         moving = false;
