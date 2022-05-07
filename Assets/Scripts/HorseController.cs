@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class HorseController : MonoBehaviour
+public class HorseController : GameEventListener
 {
     private static float DESIRED_DURATION = 0.5f;
     private float elapsedTime;
@@ -11,9 +11,18 @@ public class HorseController : MonoBehaviour
     private float horseStandLength, stretchPerPoint, horseLength;
     private Vector3 startPosition, endPosition, 
                     oldPosition, newPosition;
-    public GameObject horseStand, gameController;
+    public GameObject horseStand;
+    private GameController gameController;
 
-    void Awake() {
+    public override void OnEventEnable(EventManager eventManager) {
+        eventManager.RegisterListener(this.GetComponent<GameEventListener>());
+    }
+
+    public override void OnEventDisable(EventManager eventManager) {
+        eventManager.UnregisterListener(this.GetComponent<GameEventListener>());
+    }
+
+    private void Start() {
         horseStandLength = horseStand.GetComponent<MeshRenderer>().bounds.size.z;
         horseLength = this.GetComponent<MeshRenderer>().bounds.size.z;
         //Debug.Log("MeshSize: " + horseStand.GetComponent<MeshRenderer>().bounds.size);
@@ -55,7 +64,7 @@ public class HorseController : MonoBehaviour
             moving = false;
     }
 
-    public void OnNewPosition(int points) {
+    public override void OnEventRaised(int points) {
         if (moving)
             return;
         //int actualPoints = gameController.GetComponent<GameController>().actualPoints;

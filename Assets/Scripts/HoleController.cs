@@ -11,37 +11,38 @@ public class Holes {
 public class HoleController : MonoBehaviour
 {
     // private static string BALL_TAG = "BallEntered"; 
-    private GameController gameController;
+    private int red_points = 3; 
+    private int yellow_points = 2; 
+    private int green_points = 1;
+
+    public GameController gameController;
 
     private void Start() {
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
     }
-
-    private int red_points = 3; 
-    private int yellow_points = 2; 
-    private int green_points = 1;
   
     private void OnTriggerEnter(Collider other)
     {
         if(this.CompareTag("red_hole")) {
-            HoleEnter(red_points);
+            //Aufruf des EventManagers
+            gameController.eventManager.Raise(red_points);
         } else if (this.CompareTag("yellow_hole")) {
-            HoleEnter(yellow_points);
-        } else if (this.CompareTag("green_hole")) {
-            HoleEnter(green_points);
+            gameController.eventManager.Raise(yellow_points);
+        } else if (this.CompareTag("green_hole"))
+        {
+            gameController.eventManager.Raise(green_points);
         } else {
             return; 
         }
     }
 
+    /**
     public void HoleEnter(int points) {
         
 
         gameController.setScore(points);
-
-        // if (onHoleEnter != null)
-        //     onHoleEnter();
-    }
+        
+    }*/
 
     // private int GetCorrespondingPoints(string holeName) {
     //     if (holeName.Contains("greenHole"))
