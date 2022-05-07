@@ -8,6 +8,7 @@ TagManager:
   - yellow_hole
   - green_hole
   - HorseController
+  - ScoreController
   layers:
   - Default
   - TransparentFX

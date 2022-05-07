@@ -11,24 +11,24 @@ public class HorseController : GameEventListener
     private float horseStandLength, stretchPerPoint, horseLength;
     private Vector3 startPosition, endPosition, 
                     oldPosition, newPosition;
-    public GameObject horseStand, gameController;
+    public GameObject horseStand;
+    private GameController gameController;
 
-    public EventManager Event;
-
-    public override void OnEnable()
-    {
-        Event.RegisterListener(this);
+    public override void OnEventEnable(EventManager eventManager) {
+        eventManager.RegisterListener(this.GetComponent<GameEventListener>());
     }
 
-    void Awake()
-    {
-        OnEnable();
+    public override void OnEventDisable(EventManager eventManager) {
+        eventManager.UnregisterListener(this.GetComponent<GameEventListener>());
+    }
+
+    private void Start() {
         horseStandLength = horseStand.GetComponent<MeshRenderer>().bounds.size.z;
         horseLength = this.GetComponent<MeshRenderer>().bounds.size.z;
-        Debug.Log("MeshSize: " + horseStand.GetComponent<MeshRenderer>().bounds.size);
-        Debug.Log("horseStandLength: " + horseStandLength);
+        //Debug.Log("MeshSize: " + horseStand.GetComponent<MeshRenderer>().bounds.size);
+        //Debug.Log("horseStandLength: " + horseStandLength);
         startPosition = transform.position;
-        Debug.Log("startPosition: " + startPosition);
+        //Debug.Log("startPosition: " + startPosition);
         oldPosition = startPosition;
         newPosition = startPosition;
         endPosition = new Vector3(
@@ -36,10 +36,10 @@ public class HorseController : GameEventListener
             startPosition.y, 
             startPosition.z - horseStandLength + horseLength
         );
-        Debug.Log("endPosition: " + endPosition);
+        //Debug.Log("endPosition: " + endPosition);
         stretchPerPoint = horseStandLength/
-            GameController.MAX_NUM_OF_POINTS;
-        Debug.Log("stretchPerPoint: " + stretchPerPoint);
+            ScoreController.MAX_NUM_OF_POINTS;
+        //Debug.Log("stretchPerPoint: " + stretchPerPoint);
         elapsedTime = 0;
         moving = false;
         // GameEvents.current.onHoleEnter += OnNewPosition;
@@ -57,9 +57,9 @@ public class HorseController : GameEventListener
             oldPosition, newPosition, 
             interpolationRatio
         );
-        Debug.Log("NewPosition: " + newPosition);
+        //Debug.Log("NewPosition: " + newPosition);
         elapsedTime += Time.deltaTime;
-        Debug.Log("interpolationRatio: " + interpolationRatio);
+        //Debug.Log("interpolationRatio: " + interpolationRatio);
         if (elapsedTime <= DESIRED_DURATION)
             moving = false;
     }
@@ -70,14 +70,14 @@ public class HorseController : GameEventListener
         //int actualPoints = gameController.GetComponent<GameController>().actualPoints;
         oldPosition = newPosition;
         float moveDelta = (float)(points*stretchPerPoint);
-        Debug.Log("moveDelta: " + moveDelta);
+        //Debug.Log("moveDelta: " + moveDelta);
         Vector3 actualPosition = transform.position;
         newPosition = new Vector3(
             actualPosition.x, 
             actualPosition.y, 
             actualPosition.z - moveDelta
         );
-        Debug.Log("ActualPosition: " + actualPosition);
+        //Debug.Log("ActualPosition: " + actualPosition);
         moving = true;
         elapsedTime = 0;
         if (newPosition.z < endPosition.z)

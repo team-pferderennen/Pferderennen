@@ -1,8 +1,9 @@
-using System.Collections;
+using UnityEngine;
 using System.Collections.Generic;
 
-public class EventManager
-{
+[CreateAssetMenu(fileName = "EventManager", menuName = "horse-race/EventManager", order = 0)]
+
+public class EventManager : ScriptableObject {
     private List<GameEventListener> listeners = new List<GameEventListener>();
     
     public void Raise(int points)
@@ -11,9 +12,12 @@ public class EventManager
             listeners[i].OnEventRaised(points); 
     }
 
-    public void RegisterListener(GameEventListener listener)
-    {
+    public void RegisterListener(GameEventListener listener) {
         listeners.Add(listener);
+    }
+
+    public void UnregisterListener(GameEventListener listener) {
+        listeners.Remove(listener);
     }
     
 }

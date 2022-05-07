@@ -234,8 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf8b9c1b4ce64234093b5f11b59fd03b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newHoleEnter: 0
-  actualPoints: 0
+  eventManager: {fileID: 11400000, guid: 94797c8cfc75d7047ac006868f9b8fdd, type: 2}
 --- !u!4 &56790869
 Transform:
   m_ObjectHideFlags: 0
@@ -734,7 +733,7 @@ GameObject:
   - component: {fileID: 138223747}
   m_Layer: 0
   m_Name: HorseObject2
-  m_TagString: HorseController
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -761,14 +760,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 138223745}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23bb562d784106347a1fb21b8336fa70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moving: 0
-  horseStand: {fileID: 1408556049}
-  gameController: {fileID: 56790867}
+  horseStand: {fileID: 1401988562}
 --- !u!65 &138223748
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1111,9 +1109,10 @@ GameObject:
   - component: {fileID: 198225147}
   - component: {fileID: 198225149}
   - component: {fileID: 198225148}
+  - component: {fileID: 198225150}
   m_Layer: 5
   m_Name: ScoreLabel
-  m_TagString: Untagged
+  m_TagString: ScoreController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1234,6 +1233,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 198225146}
   m_CullTransparentMesh: 1
+--- !u!114 &198225150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198225146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ba9c655a6599314a92139fa30b4eae0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &224358558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1467,8 +1478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moving: 0
-  horseStand: {fileID: 1408556049}
-  gameController: {fileID: 56790867}
+  horseStand: {fileID: 1401988562}
 --- !u!1001 &375179875
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4196,6 +4206,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2413890332830745279, guid: 51207e09f82ae254ab666e2b9442e451, type: 3}
   m_PrefabInstance: {fileID: 1388880599}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1401988562 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8391222552659086748, guid: c8e15ae26b8be4645ae17682b6640d65, type: 3}
+  m_PrefabInstance: {fileID: 1077927736}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1406138865
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4277,11 +4292,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 2413890332830745279, guid: 51207e09f82ae254ab666e2b9442e451, type: 3}
   m_PrefabInstance: {fileID: 1406138865}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1408556049 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -7029948723529949830, guid: c8e15ae26b8be4645ae17682b6640d65, type: 3}
-  m_PrefabInstance: {fileID: 1077927736}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1462257831
 PrefabInstance:
