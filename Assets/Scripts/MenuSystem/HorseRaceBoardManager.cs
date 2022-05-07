@@ -6,17 +6,35 @@ using UnityEngine.SceneManagement;
 
 public class HorseRaceBoardManager : MonoBehaviour
 {
-    public Panel scorePanel = null;
-    public Panel actionPanel = null;
-    public Button actionMenuBttn1, 
-                  actionMenuBttn2,
+    private GameObject scorePanel, actionPanel;
+    private Canvas actionPanelCanvas, scorePanelCanvas; 
+    private Button actionMenuBttn1, 
+                  actionMenuBttn2, 
                   restartBttn, 
                   goToMenuBttn, 
                   endTheGameBttn;
     private string menuScene = "gameMenuScene";
 
     void Start() {
+        SetupBttns();
         SetupPanels();
+    }
+
+    private void SetupPanels() {
+        scorePanel = GameObject.FindGameObjectWithTag("ScorePanel");
+        actionPanel = GameObject.FindGameObjectWithTag("BttnPanel");
+        actionPanelCanvas = actionPanel.GetComponent<Canvas>();
+        scorePanelCanvas = scorePanel.GetComponent<Canvas>();
+        actionPanelCanvas.enabled = false;
+        scorePanelCanvas.enabled = true;
+    }
+
+    private void SetupBttns() {
+        restartBttn = GameObject.FindGameObjectWithTag("RestartBttn").GetComponent<Button>();
+        endTheGameBttn = GameObject.FindGameObjectWithTag("EndBttn").GetComponent<Button>();
+        goToMenuBttn = GameObject.FindGameObjectWithTag("MenuBttn").GetComponent<Button>();
+        actionMenuBttn1 = GameObject.FindGameObjectWithTag("ActionBttn1").GetComponent<Button>();
+        actionMenuBttn2 = GameObject.FindGameObjectWithTag("ActionBttn2").GetComponent<Button>();
         restartBttn.onClick.AddListener(RestartScene);
         endTheGameBttn.onClick.AddListener(EndTheGame);
         goToMenuBttn.onClick.AddListener(SwitchToMenu);
@@ -24,33 +42,28 @@ public class HorseRaceBoardManager : MonoBehaviour
         actionMenuBttn2.onClick.AddListener(ManageActionMenu);
     }
 
-    private void SetupPanels() {
-        scorePanel.Setup(this);
-        actionPanel.Setup(this);
-        scorePanel.Show();
-    }
-
     private void RestartScene() {
         Scene thisScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(thisScene.name);
     }
 
-    public void ManageActionMenu() {
-        if (scorePanel.panelIsActive) {
-            scorePanel.Hide();
-            actionPanel.Show();
+    private void ManageActionMenu() {
+        if (scorePanelCanvas.enabled) {
+            actionPanelCanvas.enabled = true;
+            scorePanelCanvas.enabled = false;
         }
         else {
-            scorePanel.Show();
-            actionPanel.Hide();
+            actionPanelCanvas.enabled = false;
+            scorePanelCanvas.enabled = true;
         }
     }
 
-    public void SwitchToMenu() {
-        SceneManager.LoadScene(menuScene);
+    private void SwitchToMenu() {
+        return;
+        // SceneManager.LoadScene(menuScene);
     }
 
-    public void EndTheGame() {
+    private void EndTheGame() {
         Application.Quit();
     }
 }

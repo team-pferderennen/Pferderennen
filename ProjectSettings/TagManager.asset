@@ -8,6 +8,15 @@ TagManager:
   - yellow_hole
   - green_hole
   - HorseController
+  - RestartBttn
+  - MenuBttn
+  - EndBttn
+  - ActionBttn2
+  - ActionBttn1
+  - ScoreLabel
+  - BttnPanel
+  - ScorePanel
+  - Light
   layers:
   - Default
   - TransparentFX

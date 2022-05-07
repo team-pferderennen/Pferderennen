@@ -4,7 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/HorseRaceScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 540ecb1be70208349949717a05e71104, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 7678348f08adf1e4399a6a285661690c, type: 2}

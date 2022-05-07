@@ -6,15 +6,10 @@ public class Panel : MonoBehaviour
 {
     public bool panelIsActive;
     private Canvas canvas = null;
-    private HorseRaceBoardManager menuManager = null;
 
     private void Awake() {
         canvas = GetComponent<Canvas>();
-    }
-
-    public void Setup(HorseRaceBoardManager menuManager) {
-        this.menuManager = menuManager;
-        Hide();    
+        panelIsActive = true;
     }
 
     // Update is called once per frame
@@ -27,6 +22,4 @@ public class Panel : MonoBehaviour
         canvas.enabled = false;
         panelIsActive = false;
     }
-
-
 }
