@@ -21,12 +21,12 @@ public class Player
             case 2: return new Vector3(
                 xrOriginPos.x,
                 xrOriginPos.y, 
-                xrOriginPos.z + POS_DELTA;
+                xrOriginPos.z + POS_DELTA
             ); 
             case 3: return new Vector3(
                 xrOriginPos.x,
                 xrOriginPos.y, 
-                xrOriginPos.z + 2*POS_DELTA;
+                xrOriginPos.z + 2*POS_DELTA
             );
         }
     }
