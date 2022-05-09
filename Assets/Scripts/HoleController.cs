@@ -1,39 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Holes {
-    public const int GreenHole = 1, 
-    YellowHole = 2, 
-    RedHole = 3;
-}
 
 public class HoleController : MonoBehaviour
 {
-    // private static string BALL_TAG = "BallEntered"; 
-    private int red_points = 3; 
-    private int yellow_points = 2; 
-    private int green_points = 1;
-
-    private GameController gameController;
-
-    private void Start() {
-        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-    }
+    private const int RED_HOLE_TAG = "red_hole"; 
+    private const int YELLOW_HOLE_TAG = "yellow_hole"; 
+    private const int GREEN_HOLE_TAG = "green_hole";
+    private const int RED_HOLE_POINTS = 3; 
+    private const int YELLOW_HOLE_POINTS = 2; 
+    private const int GREEN_HOLE_POINTS = 1;
   
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("OnTrigger");
-        if(this.CompareTag("red_hole")) {
-            //Aufruf des EventManagers
-            gameController.eventManager.Raise(red_points);
-        } else if (this.CompareTag("yellow_hole")) {
-            gameController.eventManager.Raise(yellow_points);
-        } else if (this.CompareTag("green_hole"))
-        {
-            gameController.eventManager.Raise(green_points);
-        } else {
-            return; 
+    private void OnTriggerEnter(Collider other) {
+        int points = GetPoints(other.gameObject.TAG);
+        EventManager.TriggerEvent("holeEntered", new Dictionary<string, object>{{"points", points}});
+        gameController.eventManager.Raise(points);
+    }
+
+    private void GetPoints(string holeType) {
+        switch(holeType) {
+            case RED_HOLE_TAG: return RED_HOLE_POINTS;
+            case YELLOW_HOLE_TAG: return YELLOW_HOLE_POINTS;
+            case GREEN_HOLE_TAG: return GREEN_HOLE_POINTS;
         }
     }
 }

@@ -1,21 +1,90 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class GameController : MonoBehaviour {
-    public EventManager eventManager;
-    private HorseController horseController;
-    private ScoreController scoreController;
+public class GameController: GameEventListener {
+    private const int MAX_NUM_OF_PLAYERS = 3;
+    private const float DESIRED_INTERP_DURATION = 0.5f;
+    private int playerNr;
+    private float elapsedTime;
+    public bool newHorsePosIsSet;
+    private Game game;
+    private TextMeshProUGUI scoreLabel, playerLabel;    
 
     private void Start() {
-        horseController = GameObject.FindGameObjectWithTag("HorseController").GetComponent<HorseController>();
-        scoreController = GameObject.FindGameObjectWithTag("ScoreController").GetComponent<ScoreController>();
-        horseController.OnEventEnable(eventManager);
-        scoreController.OnEventEnable(eventManager);
+        scoreLabel = GameObject.FindGameObjectWithTag("ScoreLabel").GetComponent<TextMeshProUGUI>();
+        playerLabel = GameObject.FindGameObjectWithTag("PlayerLabel").GetComponent<TextMeshProUGUI>();
+        // TODO: get numOfPlayers from the menu system
+        game = new Game(numOfPlayers=1, startPos=xrOrigin.transform.position);
+        OnEnable();
+        elapsedTime = 0;
+    }
+
+    private void Update() {
+        UpdateScoreOnBoard(game.GainedPoints);
+        if (game.PlayerCanBeSwitched()) {
+            ChangeXrOriginPos();
+            UpdatePlayerNrOnBoard(game.ActualPlayerNr);
+        }
+        if (game.FinishedGame()) {
+            List<int> winnerPlayersNrs = game.GetWinner(); 
+            // TODO: show the winners on the board for a while
+            Debug.Log(winnerPlayersNrs);
+            EndTheGame();
+        }
+    }
+    
+    void FixedUpdate() {
+        if (newHorsePosIsSet) {
+            float interpolationRatio = elapsedTime / DESIRED_INTERP_DURATION;
+            game.MoveTheHorse(interpolationRatio);
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime >= DESIRED_INTERP_DURATION)
+                newHorsePosIsSet = false;
+        }
+    }
+
+    private void UpdateScoreOnBoard(int gainedPoints) {
+        scoreLabel.text = "Points: " + gainedPoints.ToString();
+    }
+
+    private void UpdatePlayerNrOnBoard(int playerNr) {
+        playerLabel.text = "Player Nr: " + playerNr.ToString();
+    }
+
+    public void ChangeXrOriginPos() {
+        xrOrigin.transform.position = game.ActualPlayerPos();
+    }
+
+    public override void OnEnable() {
+        EventManager.StartListening("holeEntered", OnHoleEneterd);
+        EventManager.StartListening("ballIsThrown", OnBallThrown);
+    }
+
+    public override void OnDisable() {
+        EventManager.StopListening("holeEntered", OnHoleEntered);
+        EventManager.StopListening("ballIsThrown", OnBallThrown);
+    }
+
+    private void OnHoleEntered(Dictionary<string, object> message) {
+        int points = (int)message["points"];
+        game.UpdateGainedPoints(points);
+        game.SetNewHorsePos(points);
+        newHorsePosIsSet = true;
+        elapsedTime = 0;
+    }
+
+    private void OnBallThrown(Dictionary<string, object> message) {
+        game.IncreaseThrownBallsNr();
+    }
+
+    private void EndTheGame() {
+        game.OnDisable();
+        game.End();
+        // TODO: Switch to menu scene
     }
 
     private void OnDestroy() {
-        horseController.OnEventDisable(eventManager);
-        scoreController.OnEventDisable(eventManager);
+        game.OnDisable();
+        game.End();
     }
 }
