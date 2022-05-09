@@ -18,6 +18,13 @@ TagManager:
   - ScorePanel
   - Light
   - ScoreController
+  - XROrigin
+  - PlayerLabel
+  - Horse1
+  - Horse2
+  - Horse3
+  - Horse0
+  - HorseStand
   layers:
   - Default
   - TransparentFX

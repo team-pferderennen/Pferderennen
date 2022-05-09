@@ -15,7 +15,7 @@ public class Horse
     
     public Horse(int horseNr) {
         this.horseNr = horseNr;
-        string horseTag = HORSE_TAG + (string)horseNr;
+        string horseTag = HORSE_TAG + horseNr.ToString();
         this.horseObject = GameObject.FindGameObjectWithTag(horseTag);
         this.horseStandObject = GameObject.FindGameObjectWithTag(HORSE_STAND_TAG);
         float horseObjectLength = horseObject.GetComponent<MeshRenderer>().bounds.size.z;
@@ -51,7 +51,7 @@ public class Horse
             newPos = endPos;
     }
 
-    public Vector3 HorseNr {
+    public int HorseNr {
         get { return horseNr; }
         set { horseNr = value; }
     }

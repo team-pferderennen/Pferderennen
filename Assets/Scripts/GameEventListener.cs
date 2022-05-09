@@ -4,6 +4,6 @@ using UnityEngine;
 
 public abstract class GameEventListener: MonoBehaviour
 {
-    public abstract void OnEventEnable();
-    public abstract void OnEventDisable();
+    public abstract void OnEnable();
+    public abstract void OnDisable();
 }

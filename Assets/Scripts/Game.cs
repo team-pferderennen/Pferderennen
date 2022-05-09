@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Linq;
 
 public class Game
 {
-    private const int MAX_NUM_OF_POINTS = 10;
+    public const int MAX_NUM_OF_POINTS = 10;
     private const int MAX_NUM_OF_PLAYERS = 3;
     private const int MAX_NUM_OF_THROWN_BALLS = 5;
     private List<Player> players = new List<Player>();
-    private List<Horses> horses = new List<Horses>();
+    private List<Horse> horses = new List<Horse>();
     private int numOfPlayers;
     private int actualPlayerNr;
 
@@ -19,7 +20,7 @@ public class Game
     }
 
     public void AddGameObjects(int numOfPlayers) {
-        for (playerNr = 0; playerNr < numOfPlayers; playerNr++) {
+        for (int playerNr = 0; playerNr < numOfPlayers; playerNr++) {
             Player newPlayer = new Player(playerNr);
             players.Add(newPlayer);
             Horse newHorse = new Horse(playerNr);
@@ -27,7 +28,7 @@ public class Game
         }
     }
 
-    public void PlayerCanBeSwitched() {
+    public bool PlayerCanBeSwitched() {
         if (PlayerIsDone()) {
             SwitchToNextPlayer();        
             return true;
@@ -49,6 +50,10 @@ public class Game
         players[actualPlayerNr].GainedPoints += points;
     }
 
+    public int GainedPoints() {
+        return players[actualPlayerNr].GainedPoints;
+    }
+
     public void IncreaseThrownBallsNr() {
         players[actualPlayerNr].NumberOfThrownBalls++;
     }
@@ -66,7 +71,7 @@ public class Game
     }
 
 
-    private bool FinishedGame() {
+    public bool FinishedGame() {
         if ((actualPlayerNr+1)==numOfPlayers)
             return true;
         return false;
@@ -80,21 +85,21 @@ public class Game
         for (playerNr = 0; playerNr < numOfPlayers; playerNr++)
             gainedPoints.Add(players[playerNr].GainedPoints)
         int maxGainedPoints = gainedPoints.Max(); */
-        for (playerNr = 0; playerNr < numOfPlayers; playerNr++) {
-            if(maxGainedPoints == players.[playerNr].GainedPoints)
+        for (int playerNr = 0; playerNr < numOfPlayers; playerNr++) {
+            if(maxGainedPoints == players[playerNr].GainedPoints)
                 winnerPlayersNrs.Add(playerNr);
         }
         return winnerPlayersNrs;
     }
 
-    private void End() {
+    public void End() {
         RemoveGameObjects();
     }
 
     private void RemoveGameObjects() {
-        for (playerNr = 0; playerNr < numOfPlayers; playerNr++) {
-            players[playerNr].Remove();
-            horses[playerNr].Remove();
+        for (int playerNr = 0; playerNr < numOfPlayers; playerNr++) {
+            players.RemoveAt(playerNr);
+            horses.RemoveAt(playerNr);
         }
     }
 

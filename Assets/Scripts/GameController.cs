@@ -1,5 +1,18 @@
+// Playermanager
+
+
+
+
+
+/// Collider für Würfe, die daneben gegangen sind.
+
+
+
 using System;
 using UnityEngine;
+using TMPro;
+using System.Collections.Generic;
+using System.Numerics;
 
 public class GameController: GameEventListener {
     private const int MAX_NUM_OF_PLAYERS = 3;
@@ -8,19 +21,26 @@ public class GameController: GameEventListener {
     private float elapsedTime;
     public bool newHorsePosIsSet;
     private Game game;
-    private TextMeshProUGUI scoreLabel, playerLabel;    
+    private TextMeshProUGUI scoreLabel, playerLabel;
+
+    private GameObject xrOrigin;
+
+
 
     private void Start() {
         scoreLabel = GameObject.FindGameObjectWithTag("ScoreLabel").GetComponent<TextMeshProUGUI>();
         playerLabel = GameObject.FindGameObjectWithTag("PlayerLabel").GetComponent<TextMeshProUGUI>();
-        // TODO: get numOfPlayers from the menu system
-        game = new Game(numOfPlayers=1, startPos=xrOrigin.transform.position);
+        xrOrigin = GameObject.FindGameObjectWithTag("XROrigin");
+        /********************************
+        * TODO: get numOfPlayers from the menu system
+        ****************************/
+        game = new Game(1);
         OnEnable();
         elapsedTime = 0;
     }
 
     private void Update() {
-        UpdateScoreOnBoard(game.GainedPoints);
+        UpdateScoreOnBoard(game.GainedPoints());
         if (game.PlayerCanBeSwitched()) {
             ChangeXrOriginPos();
             UpdatePlayerNrOnBoard(game.ActualPlayerNr);
@@ -52,11 +72,12 @@ public class GameController: GameEventListener {
     }
 
     public void ChangeXrOriginPos() {
-        xrOrigin.transform.position = game.ActualPlayerPos();
+        System.Numerics.Vector3 actualPos = game.ActualPlayerPos();
+        xrOrigin.transform.position = new UnityEngine.Vector3(actualPos.X, actualPos.Y, actualPos.Z);
     }
 
     public override void OnEnable() {
-        EventManager.StartListening("holeEntered", OnHoleEneterd);
+        EventManager.StartListening("holeEntered", OnHoleEntered);
         EventManager.StartListening("ballIsThrown", OnBallThrown);
     }
 
@@ -78,13 +99,13 @@ public class GameController: GameEventListener {
     }
 
     private void EndTheGame() {
-        game.OnDisable();
+        OnDisable();
         game.End();
         // TODO: Switch to menu scene
     }
 
     private void OnDestroy() {
-        game.OnDisable();
+        OnDisable();
         game.End();
     }
 }
