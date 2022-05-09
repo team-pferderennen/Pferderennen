@@ -11,7 +11,7 @@ public class HoleController : MonoBehaviour
     private const int GREEN_HOLE_POINTS = 1;
   
     private void OnTriggerEnter(Collider other) {
-        int points = GetPoints(other.gameObject.TAG);
+        int points = GetPoints(other.gameObject.tag);
         EventManager.TriggerEvent("holeEntered", new Dictionary<string, object>{{"points", points}});
         gameController.eventManager.Raise(points);
     }
