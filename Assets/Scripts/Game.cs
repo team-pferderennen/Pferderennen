@@ -73,7 +73,7 @@ public class Game
     }
 
     public List<int> GetWinner() {
-        List<int> winnerPlayersNrs = new List<int>;
+        List<int> winnerPlayersNrs = new List<int>();
         int maxGainedPoints = players.Max(player => player.GainedPoints);
         /* 
         List<int> gainedPoints = new List<int>;
