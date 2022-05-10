@@ -35,7 +35,7 @@ public class PlayersManager: GameEventListener
         if (FinishedGame() && playersAreReady) {
             List<int> winnerPlayersNrs = GetWinner(); 
             /********************************
-            * TODO: show the winners on the board for a while
+            * TODO: show the winners on the board for a while (EventManager)
             * TODO: switch to game menu
             ****************************/
             Debug.Log(winnerPlayersNrs);
@@ -94,30 +94,30 @@ public class PlayersManager: GameEventListener
         }
     }
 
-    public void UpdateGainedPoints(int points) {
+    private void UpdateGainedPoints(int points) {
         players[actualPlayerNr-1].GainedPoints += points;
     }
 
-    public int GainedPoints() {
+    private int GainedPoints() {
         return players[actualPlayerNr-1].GainedPoints;
     }
 
-    public void IncreaseThrownBallsNr() {
+    private void IncreaseThrownBallsNr() {
         players[actualPlayerNr-1].NumberOfThrownBalls++;
     }
 
-    public System.Numerics.Vector3 ActualPlayerPos() {
+    private System.Numerics.Vector3 ActualPlayerPos() {
         return players[actualPlayerNr-1].position;
     }
 
-    public bool FinishedGame() {
+    private bool FinishedGame() {
         if (actualPlayerNr > numOfPlayers)
             return true;
         return false;
     }
 
 
-    public List<int> GetWinner() {
+    private List<int> GetWinner() {
         List<int> winnerPlayersNrs = new List<int>();
         int maxGainedPoints = players.Max(player => player.TotalScore);
         /* 
@@ -130,12 +130,6 @@ public class PlayersManager: GameEventListener
                 winnerPlayersNrs.Add(playerNr);
         }
         return winnerPlayersNrs;
-    }
-
-    private void RemovePlayers() {
-        for (int playerNr = 0; playerNr < numOfPlayers; playerNr++) {
-            players.RemoveAt(playerNr);
-        }
     }
 
     public int NumOfPlayers {

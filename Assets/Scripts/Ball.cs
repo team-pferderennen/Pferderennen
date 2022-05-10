@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class BallController : MonoBehaviour
+public class Ball : MonoBehaviour
 {  
     private const string TRAJECTORY_PLATE = "trajectoryPlate";
 

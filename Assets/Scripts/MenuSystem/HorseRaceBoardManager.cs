@@ -66,6 +66,31 @@ public class HorseRaceBoardManager: GameEventListener
         playerLabel.text = "Player Nr: " + actualPlayerNr.ToString();
     }
 
+    private void ManageActionMenu() {
+        if (scorePanelCanvas.enabled) {
+            actionPanelCanvas.enabled = true;
+            scorePanelCanvas.enabled = false;
+        }
+        else {
+            actionPanelCanvas.enabled = false;
+            scorePanelCanvas.enabled = true;
+        }
+    }
+
+    private void RestartScene() {
+        Scene thisScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(thisScene.name);
+    }
+
+    private void SwitchToMenu() {
+        return;
+        // SceneManager.LoadScene(menuScene);
+    }
+
+    private void EndTheGame() {
+        Application.Quit();
+    }
+
     private void SetupPanels() {
         scorePanel = GameObject.FindGameObjectWithTag("ScorePanel");
         actionPanel = GameObject.FindGameObjectWithTag("BttnPanel");
@@ -92,30 +117,5 @@ public class HorseRaceBoardManager: GameEventListener
         scoreLabel = GameObject.FindGameObjectWithTag("ScoreLabel").GetComponent<TextMeshProUGUI>();
         playerLabel = GameObject.FindGameObjectWithTag("PlayerLabel").GetComponent<TextMeshProUGUI>();
         ballsNumLabel = GameObject.FindGameObjectWithTag("BallsNumLabel").GetComponent<TextMeshProUGUI>();
-    }
-
-    private void RestartScene() {
-        Scene thisScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(thisScene.name);
-    }
-
-    private void ManageActionMenu() {
-        if (scorePanelCanvas.enabled) {
-            actionPanelCanvas.enabled = true;
-            scorePanelCanvas.enabled = false;
-        }
-        else {
-            actionPanelCanvas.enabled = false;
-            scorePanelCanvas.enabled = true;
-        }
-    }
-
-    private void SwitchToMenu() {
-        return;
-        // SceneManager.LoadScene(menuScene);
-    }
-
-    private void EndTheGame() {
-        Application.Quit();
     }
 }
