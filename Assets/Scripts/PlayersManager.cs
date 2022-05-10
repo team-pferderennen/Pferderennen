@@ -12,7 +12,7 @@ public class PlayersManager: GameEventListener
 {
     public const int MAX_NUM_OF_POINTS = 10;
     private const int NUM_OF_PLAYERS = 3;
-    private const int MAX_NUM_OF_THROWN_BALLS = 5;
+    private const int MAX_NUM_OF_THROWN_BALLS = 10;
     private int numOfPlayers;
     private int actualPlayerNr;
     private bool playersAreReady;
@@ -41,6 +41,7 @@ public class PlayersManager: GameEventListener
             Debug.Log(winnerPlayersNrs);
         }
         if (PlayerCanBeSwitched() && playersAreReady) {
+            Debug.Log("PlayerSwitched");
             SwitchToNextPlayer(); 
             ChangeXrOriginPos();
             EventManager.TriggerEvent("playerChanged", null);

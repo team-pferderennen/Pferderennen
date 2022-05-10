@@ -13,7 +13,6 @@ public class HorseRaceBoardManager: GameEventListener
     private Button actionMenuBttn1, actionMenuBttn2, restartBttn, 
                    goToMenuBttn, endTheGameBttn;
     private TextMeshProUGUI scoreLabel, playerLabel, ballsNumLabel;
-    private string menuScene = "gameMenuScene";
     private int actualPlayerNr, numOfThrownBalls, gainedPoints;
 
     void Start() {
@@ -44,14 +43,12 @@ public class HorseRaceBoardManager: GameEventListener
     }
 
     private void OnBallThrown(Dictionary<string, object> message) {
-        Debug.Log("BallEvent");
         numOfThrownBalls++;
         UpdateNumOfThrownBallsOnBoard();
     }
 
 
     private void OnPlayerChanged(Dictionary<string, object> message) {
-        Debug.Log("PlayerChangedEvent");
         actualPlayerNr++;
         UpdatePlayerNrOnBoard();
     }

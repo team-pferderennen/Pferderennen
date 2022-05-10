@@ -1,9 +1,11 @@
-// http://bernardopacheco.net/using-an-event-manager-to-decouple-your-game-in-unity
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EventManager : MonoBehaviour {
+  /*
+  * Source: // http://bernardopacheco.net/using-an-event-manager-to-decouple-your-game-in-unity
+  */
   private Dictionary<string, Action<Dictionary<string, object>>> eventDictionary;
 
   private static EventManager eventManager;

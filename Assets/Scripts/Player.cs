@@ -3,7 +3,7 @@ using System.Numerics;
 
 public class Player
 {
-    private const int POS_DELTA = 3;
+    private const float POS_DELTA = 2.7f;
     private int playerNr, gainedPoints, totalScore, numberOfThrownBalls;
     public Vector3 position;
     
@@ -20,12 +20,12 @@ public class Player
             case 2: return new Vector3(
                 startPos.X,
                 startPos.Y,
-                startPos.Z + POS_DELTA
+                startPos.Z - POS_DELTA
             ); 
             case 3: return new Vector3(
                 startPos.X,
                 startPos.Y,
-                startPos.Z + 2*POS_DELTA
+                startPos.Z - 2*POS_DELTA
             );
             default:
                  return startPos;
