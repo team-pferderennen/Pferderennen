@@ -11,13 +11,16 @@ using UnityEngine;
 public class PlayersManager: GameEventListener
 {
     public const int MAX_NUM_OF_POINTS = 10;
-    private const int MAX_NUM_OF_PLAYERS = 3;
+    private const int NUM_OF_PLAYERS = 3;
     private const int MAX_NUM_OF_THROWN_BALLS = 5;
-    private List<Player> players = new List<Player>();
     private int numOfPlayers;
     private int actualPlayerNr;
+    private bool playersAreReady;
+    private List<Player> players = new List<Player>();
+
 
     private void Start() {
+        playersAreReady = false;
         /********************************
         * TODO: get numOfPlayers from the menu system
         ****************************/
@@ -25,41 +28,42 @@ public class PlayersManager: GameEventListener
         UnityEngine.Vector3 unityStartPos = transform.position;
         System.Numerics.Vector3 startPos = new System.Numerics.Vector3(
             unityStartPos.x, unityStartPos.y, unityStartPos.z);
-        AddPlayers(numOfPlayers=1, startPos);
-        OnEnable();
+        AddPlayers(NUM_OF_PLAYERS, startPos);
     }
 
     private void Update() {
-        if (FinishedGame()) {
-            List<int> winnerPlayersNrs = playerManager.GetWinner(); 
+        if (FinishedGame() && playersAreReady) {
+            List<int> winnerPlayersNrs = GetWinner(); 
             /********************************
             * TODO: show the winners on the board for a while
             * TODO: switch to game menu
             ****************************/
             Debug.Log(winnerPlayersNrs);
         }
-        if (PlayerCanBeSwitched()) {
+        if (PlayerCanBeSwitched() && playersAreReady) {
+            SwitchToNextPlayer(); 
             ChangeXrOriginPos();
             EventManager.TriggerEvent("playerChanged", null);
         }
     }
 
-    public void AddPlayers(int numOfPlayers, Vector3 startPos) {
+    public void AddPlayers(int numOfPlayers, System.Numerics.Vector3 startPos) {
         for (int playerNr = 0; playerNr < numOfPlayers; playerNr++) {
             Player newPlayer = new Player(playerNr, startPos);
             players.Add(newPlayer);
         }
+        playersAreReady = true;
     }
 
 
     public override void OnEnable() {
-        EventManager.StartListening("holeEntered", OnHoleEntered);
-        EventManager.StartListening("ballIsThrown", OnBallThrown);
+        EventManager.StartListening("holeEntered", this.OnHoleEntered);
+        EventManager.StartListening("ballIsThrown", this.OnBallThrown);
     }
 
     public override void OnDisable() {
-        EventManager.StopListening("holeEntered", OnHoleEntered);
-        EventManager.StopListening("ballIsThrown", OnBallThrown);
+        EventManager.StopListening("holeEntered", this.OnHoleEntered);
+        EventManager.StopListening("ballIsThrown", this.OnBallThrown);
     }
 
     private void OnHoleEntered(Dictionary<string, object> message) {
@@ -68,6 +72,7 @@ public class PlayersManager: GameEventListener
     }
 
     private void OnBallThrown(Dictionary<string, object> message) {
+        Debug.Log("BallEventFromPlayersManager");
         IncreaseThrownBallsNr();
     }
 
@@ -76,40 +81,32 @@ public class PlayersManager: GameEventListener
         transform.position = new UnityEngine.Vector3(actualPos.X, actualPos.Y, actualPos.Z);
     }
 
-    public bool PlayerCanBeSwitched() {
-        if (PlayerIsDone()) {
-            SwitchToNextPlayer();        
-            return true;
-        }
-        return false;
-    }
-
-    private bool PlayerIsDone() {
-        return ((players[actualPlayerNr].GainedPoints >= MAX_NUM_OF_POINTS) ||
-            (players[actualPlayerNr].NumberOfThrownBalls >= MAX_NUM_OF_THROWN_BALLS));
+    private bool PlayerCanBeSwitched() {
+        return ((players[actualPlayerNr-1].GainedPoints >= MAX_NUM_OF_POINTS) ||
+                (players[actualPlayerNr-1].NumberOfThrownBalls >= MAX_NUM_OF_THROWN_BALLS));
     } 
 
     private void SwitchToNextPlayer() {
-        if (actualPlayerNr<numOfPlayers) {
+        if (actualPlayerNr < NUM_OF_PLAYERS) {
+            players[actualPlayerNr-1].CalculateTotalScore();
             actualPlayerNr++;
-            players[actualPlayerNr].CalculateTotalScore();
         }
     }
 
     public void UpdateGainedPoints(int points) {
-        players[actualPlayerNr].GainedPoints += points;
+        players[actualPlayerNr-1].GainedPoints += points;
     }
 
     public int GainedPoints() {
-        return players[actualPlayerNr].GainedPoints;
+        return players[actualPlayerNr-1].GainedPoints;
     }
 
     public void IncreaseThrownBallsNr() {
-        players[actualPlayerNr].NumberOfThrownBalls++;
+        players[actualPlayerNr-1].NumberOfThrownBalls++;
     }
 
-    public Vector3 ActualPlayerPos() {
-        return players[actualPlayerNr].position;
+    public System.Numerics.Vector3 ActualPlayerPos() {
+        return players[actualPlayerNr-1].position;
     }
 
     public bool FinishedGame() {
@@ -134,19 +131,9 @@ public class PlayersManager: GameEventListener
         return winnerPlayersNrs;
     }
 
-    private void OnDestroy() {
-        Finish();
-    }
-
-    public void Finish() {
-        OnDisable();
-        RemoveGameObjects();
-    }
-
-    private void RemoveGameObjects() {
+    private void RemovePlayers() {
         for (int playerNr = 0; playerNr < numOfPlayers; playerNr++) {
             players.RemoveAt(playerNr);
-            horses.RemoveAt(playerNr);
         }
     }
 

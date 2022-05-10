@@ -48,7 +48,7 @@ public class Player
 
     public int TotalScore {
         get { return totalScore; }
-        set { total = value; }
+        set { totalScore = value; }
     }
 
     public int NumberOfThrownBalls {

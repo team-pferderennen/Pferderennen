@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 public class HoleController : MonoBehaviour
 {
-    private const string RED_HOLE_TAG = "red_hole";
-    private const string YELLOW_HOLE_TAG = "yellow_hole";
-    private const string GREEN_HOLE_TAG = "green_hole";
+    private const string RED_HOLE_TAG = "redHole";
+    private const string YELLOW_HOLE_TAG = "yellowHole";
+    private const string GREEN_HOLE_TAG = "greenHole";
     private const int RED_HOLE_POINTS = 3; 
     private const int YELLOW_HOLE_POINTS = 2; 
     private const int GREEN_HOLE_POINTS = 1;
@@ -14,12 +14,13 @@ public class HoleController : MonoBehaviour
     
   
     private void OnTriggerEnter(Collider other) {
-        int points = GetPoints(other.gameObject.tag);
+        int points = GetPoints(this.tag);
+        Debug.Log(points);
         EventManager.TriggerEvent("holeEntered", new Dictionary<string, object>{{"points", points}});
     }
 
-    private int GetPoints(string holeType) {
-        switch(holeType) {
+    private int GetPoints(string holeTag) {
+        switch(holeTag) {
             case RED_HOLE_TAG: return RED_HOLE_POINTS;
             case YELLOW_HOLE_TAG: return YELLOW_HOLE_POINTS;
             case GREEN_HOLE_TAG: return GREEN_HOLE_POINTS;

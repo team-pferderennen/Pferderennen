@@ -25,6 +25,11 @@ TagManager:
   - Horse3
   - Horse0
   - HorseStand
+  - BallsNumLabel
+  - EventManager
+  - yellowHole
+  - redHole
+  - greenHole
   layers:
   - Default
   - TransparentFX

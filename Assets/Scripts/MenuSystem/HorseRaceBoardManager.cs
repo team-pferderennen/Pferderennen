@@ -12,7 +12,7 @@ public class HorseRaceBoardManager: GameEventListener
     private Canvas actionPanelCanvas, scorePanelCanvas; 
     private Button actionMenuBttn1, actionMenuBttn2, restartBttn, 
                    goToMenuBttn, endTheGameBttn;
-    private TextMeshProUGUI scoreLabel, playerLabel;
+    private TextMeshProUGUI scoreLabel, playerLabel, ballsNumLabel;
     private string menuScene = "gameMenuScene";
     private int actualPlayerNr, numOfThrownBalls, gainedPoints;
 
@@ -23,19 +23,18 @@ public class HorseRaceBoardManager: GameEventListener
         actualPlayerNr = 1;
         numOfThrownBalls = 0;
         gainedPoints = 0;
-        OnEnable();
     }
 
     public override void OnEnable() {
-        EventManager.StartListening("holeEntered", OnHoleEntered);
-        EventManager.StartListening("ballIsThrown", OnBallThrown);
-        EventManager.StartListening("playerChanged", OnPlayerChanged);
+        EventManager.StartListening("holeEntered", this.OnHoleEntered);
+        EventManager.StartListening("ballIsThrown", this.OnBallThrown);
+        EventManager.StartListening("playerChanged", this.OnPlayerChanged);
     }
 
     public override void OnDisable() {
-        EventManager.StopListening("holeEntered", OnHoleEntered);
-        EventManager.StopListening("ballIsThrown", OnBallThrown);
-        EventManager.StartListening("playerChanged", OnPlayerChanged);
+        EventManager.StopListening("holeEntered", this.OnHoleEntered);
+        EventManager.StopListening("ballIsThrown", this.OnBallThrown);
+        EventManager.StartListening("playerChanged", this.OnPlayerChanged);
     }
 
     private void OnHoleEntered(Dictionary<string, object> message) {
@@ -45,12 +44,14 @@ public class HorseRaceBoardManager: GameEventListener
     }
 
     private void OnBallThrown(Dictionary<string, object> message) {
+        Debug.Log("BallEvent");
         numOfThrownBalls++;
         UpdateNumOfThrownBallsOnBoard();
     }
 
 
     private void OnPlayerChanged(Dictionary<string, object> message) {
+        Debug.Log("PlayerChangedEvent");
         actualPlayerNr++;
         UpdatePlayerNrOnBoard();
     }
@@ -60,11 +61,11 @@ public class HorseRaceBoardManager: GameEventListener
         scoreLabel.text = "Points: " + gainedPoints.ToString();
     }
 
-    private void UpdateScoreOnBoard() {
-        scoreLabel.text = "Thrown Balls: " + numOfThrownBalls.ToString();
+    private void UpdateNumOfThrownBallsOnBoard() {
+        ballsNumLabel.text = "Thrown Balls: " + numOfThrownBalls.ToString();
     }
 
-    private void UpdatePlayerNrOnBoard(int playerNr) {
+    private void UpdatePlayerNrOnBoard() {
         playerLabel.text = "Player Nr: " + actualPlayerNr.ToString();
     }
 
@@ -93,7 +94,7 @@ public class HorseRaceBoardManager: GameEventListener
     private void SetupLabels() {
         scoreLabel = GameObject.FindGameObjectWithTag("ScoreLabel").GetComponent<TextMeshProUGUI>();
         playerLabel = GameObject.FindGameObjectWithTag("PlayerLabel").GetComponent<TextMeshProUGUI>();
-        BallsNumLabel = GameObject.FindGameObjectWithTag("BallsNumLabel").GetComponent<TextMeshProUGUI>();
+        ballsNumLabel = GameObject.FindGameObjectWithTag("BallsNumLabel").GetComponent<TextMeshProUGUI>();
     }
 
     private void RestartScene() {
@@ -119,9 +120,5 @@ public class HorseRaceBoardManager: GameEventListener
 
     private void EndTheGame() {
         Application.Quit();
-    }
-
-    private void OnDestroy() {
-        OnDisable();
     }
 }
