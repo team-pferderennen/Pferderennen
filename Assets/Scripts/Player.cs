@@ -1,38 +1,39 @@
 using System;
 using System.Numerics;
-using UnityEngine;
 
 public class Player
 {
     private const int POS_DELTA = 3;
-    private int playerNr, gainedPoints, numberOfThrownBalls;
-    public System.Numerics.Vector3 position;
+    private int playerNr, gainedPoints, totalScore, numberOfThrownBalls;
+    public Vector3 position;
     
-    public Player(int playerNr) {
+    public Player(int playerNr, Vector3 startPos) {
         this.playerNr = playerNr;
         this.gainedPoints = 0;
         this.numberOfThrownBalls = 0;
-        UnityEngine.Vector3 unityPos = GameObject.FindGameObjectWithTag("XROrigin").transform.position;
-        System.Numerics.Vector3 xrOriginPos = new System.Numerics.Vector3(unityPos.x, unityPos.y, unityPos.z);
-        this.position = GetPlayerPos(playerNr, xrOriginPos);
+        this.totalScore = 0;
+        this.position = GetPlayerPos(playerNr, startPos);
     }
 
-    private System.Numerics.Vector3 GetPlayerPos(int playerNr, System.Numerics.Vector3 xrOriginPos) {
+    private System.Numerics.Vector3 GetPlayerPos(int playerNr, Vector3 startPos) {
         switch(playerNr) {
-            case 1: return xrOriginPos;
-            case 2: return new System.Numerics.Vector3(
-                xrOriginPos.X,
-                xrOriginPos.Y,
-                xrOriginPos.Z + POS_DELTA
+            case 2: return new Vector3(
+                startPos.X,
+                startPos.Y,
+                startPos.Z + POS_DELTA
             ); 
-            case 3: return new System.Numerics.Vector3(
-                xrOriginPos.X,
-                xrOriginPos.Y,
-                xrOriginPos.Z + 2*POS_DELTA
+            case 3: return new Vector3(
+                startPos.X,
+                startPos.Y,
+                startPos.Z + 2*POS_DELTA
             );
             default:
-                 return xrOriginPos;
+                 return startPos;
         }
+    }
+
+    public void CalculateTotalScore() {
+        totalScore = numberOfThrownBalls*gainedPoints;
     }
 
     public int PlayerNr {
@@ -43,6 +44,11 @@ public class Player
     public int GainedPoints {
         get { return gainedPoints; }
         set { gainedPoints = value; }
+    }
+
+    public int TotalScore {
+        get { return totalScore; }
+        set { total = value; }
     }
 
     public int NumberOfThrownBalls {
