@@ -38,7 +38,6 @@ public class HorseStandManager: GameEventListener {
     }
 
     private void SetDefaultPositions() {
-        Debug.Log("SetDefaultPositions"+(actualHorseNr-1));
         startPos = horses[actualHorseNr-1].transform.position;
         newPos = startPos; 
         oldPos = newPos;
@@ -51,7 +50,6 @@ public class HorseStandManager: GameEventListener {
 
     private void Update() {
         if (playerIsChanged && !newHorsePosIsSet) {
-            Debug.Log("OnPlayerChanged");
             actualHorseNr++;
             SetDefaultPositions();
             playerIsChanged = false;
@@ -80,7 +78,6 @@ public class HorseStandManager: GameEventListener {
 
     private void OnHoleEntered(Dictionary<string, object> message) {
         int points = (int)message["points"];
-        Debug.Log("HoleEntered" + points);
         SetNewPos(points);
         newHorsePosIsSet = true;
         elapsedTime = 0;
@@ -91,7 +88,6 @@ public class HorseStandManager: GameEventListener {
     }
 
     public void InterpolateMove(float interpolationRatio) {
-        Debug.Log("InterpolateMove"+(actualHorseNr-1));
         horses[actualHorseNr-1].transform.position = Vector3.Lerp(
             oldPos, newPos, 
             interpolationRatio

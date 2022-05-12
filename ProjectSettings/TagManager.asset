@@ -31,6 +31,8 @@ TagManager:
   - redHole
   - greenHole
   - trajectoryPlate
+  - TotalScoreLabel
+  - CheckPlate
   layers:
   - Default
   - TransparentFX
