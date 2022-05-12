@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8540885941070559567}
   - component: {fileID: 6296173328787834273}
   - component: {fileID: 9110582203172335037}
-  - component: {fileID: 992276037295494434}
+  - component: {fileID: 4504141542196025214}
   m_Layer: 0
   m_Name: pref_hole_collider
   m_TagString: Untagged
@@ -96,7 +96,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &992276037295494434
+--- !u!114 &4504141542196025214
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,6 +105,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 4388100753406130163}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d640bfe0b8c98384cbf140fcd8801aa4, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f4f5a058d109494591dbc448e25b5bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

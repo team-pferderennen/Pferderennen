@@ -33,7 +33,7 @@ public class Player
     }
 
     public void CalculateTotalScore() {
-        totalScore = numberOfThrownBalls*gainedPoints;
+        totalScore = (int)(10 * gainedPoints / numberOfThrownBalls);
     }
 
     public int PlayerNr {

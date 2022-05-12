@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 
-public class HoleController : MonoBehaviour
+public class Hole : MonoBehaviour
 {
     private const string RED_HOLE_TAG = "redHole";
     private const string YELLOW_HOLE_TAG = "yellowHole";
@@ -14,12 +14,12 @@ public class HoleController : MonoBehaviour
     
   
     private void OnTriggerEnter(Collider other) {
-        int points = GetPoints(this.tag);
+        int points = GetPointsByColor(this.tag);
         Debug.Log(points);
         EventManager.TriggerEvent("holeEntered", new Dictionary<string, object>{{"points", points}});
     }
 
-    private int GetPoints(string holeTag) {
+    private int GetPointsByColor(string holeTag) {
         switch(holeTag) {
             case RED_HOLE_TAG: return RED_HOLE_POINTS;
             case YELLOW_HOLE_TAG: return YELLOW_HOLE_POINTS;
